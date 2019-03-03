@@ -1,5 +1,5 @@
 import React from "react";
-import { HomeScreen, DetailsScreen, HobbiesScreen } from "../screens";
+import { HomeScreen, DetailsScreen, HobbiesScreen, LanguageScreen } from "../screens";
 import { createBottomTabNavigator, createAppContainer } from "react-navigation";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -7,7 +7,8 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 const iconNames = {
     Home: 'home',
     Details: "perm-identity",
-    Hobbies: "stars"
+    Hobbies: "stars",
+    Language: "home"
 };
 
 const Tabs = createBottomTabNavigator({
