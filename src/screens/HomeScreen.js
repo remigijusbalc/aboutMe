@@ -1,31 +1,18 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import {Platform, StyleSheet, Text, View, Image} from 'react-native';
+import { GradientView } from "../components";
 
 type Props = {};
 export default class HomeScreen extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Home</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <GradientView style={styles.container}>
+        <Image
+        style={{ width: "35%", height: "35%"}}
+         source={{uri: "avatar"}}/>
+        <Text style={styles.headerText}>Remigijus Balčiūnas</Text>
+        <Text>Mobile Applications Developer</Text>
+      </GradientView>
     );
   }
 }
@@ -42,9 +29,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
+  headerText: {
     textAlign: 'center',
+    fontWeight: "bold",
     color: '#333333',
-    marginBottom: 5,
+    fontSize: 20,
+    margin: 4,
   },
 });
