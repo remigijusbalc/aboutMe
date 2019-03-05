@@ -17,6 +17,7 @@ const Tabs = createBottomTabNavigator({
     Hobbies: HobbiesScreen
 },
 {
+  initialRouteName: "Details",
     animationEnabled: true,
         defaultNavigationOptions: ({ navigation }) => ({
           tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -27,7 +28,7 @@ const Tabs = createBottomTabNavigator({
           },
         }),
         tabBarOptions: {
-          activeTintColor: 'tomato',
+          activeTintColor: '#6DD5FA',
           inactiveTintColor: 'gray',
         },
       
