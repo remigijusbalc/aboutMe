@@ -8,10 +8,14 @@
  */
 
 import React from 'react';
-import { TabNavigator } from "./src/navigation";
+import { SwitchNavigator } from "./src/navigation";
+import Store from "./src/redux/Store";
+import { Provider } from "react-redux";
 
 export default App = () => {
       return (
-        <TabNavigator/>
+        <Provider store={Store}>
+        <SwitchNavigator/>
+        </Provider>
     );
 }
