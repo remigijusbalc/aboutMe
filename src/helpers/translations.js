@@ -28,14 +28,26 @@ export default (DICTIONARY = {
   },
   personalEducation: {
     lt: {
-      university: "Vilniaus Kolegijos Elektronikos ir Informatikos fakultetas",
-      degree: "Informatikos inžinerijos profesinis bakalauras",
-      field: "Išmaniųjų įrenginių technologijos"
+      university: {
+        title: "Kolegija",
+        value: "Vilniaus Kolegijos Elektronikos ir Informatikos fakultetas"
+      },
+      degree: {
+        title: "Diplomas",
+        value: "Informatikos inžinerijos profesinis bakalauras"
+      },
+      field: { title: "Specialybė", value: "Išmaniųjų įrenginių technologijos" }
     },
     en: {
-      university: "Vilniaus Kolegija/University of Applied Sciences",
-      degree: "Professional Bachelor of Informatics Engineering",
-      field: "Smart Device Technology"
+      university: {
+        title: "University",
+        value: "Vilniaus Kolegija/University of Applied Sciences"
+      },
+      degree: {
+        title: "Degree",
+        value: "Professional Bachelor of Informatics Engineering"
+      },
+      field: { title: "Field", value: "Smart Device Technology" }
     }
   },
   Details: {
