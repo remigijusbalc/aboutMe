@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import { remoteAccounts } from "../helpers";
 
 const RemoteAccountsComponent = () => {
-  return remoteAccounts.map((account, idx) => {
+  const children = remoteAccounts.map((account, idx) => {
     return (
       <TouchableOpacity
         key={account.imageName + idx}
@@ -31,7 +31,21 @@ const RemoteAccountsComponent = () => {
         />
       </TouchableOpacity>
     );
-  });
+  }, []);
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        backgroundColor: "rgba(0,0,0,0.1)",
+        borderRadius: 15,
+        width: "90%",
+        padding: 8
+      }}
+    >
+      {children}
+    </View>
+  );
 };
 
 const AboutMeModal = ({ visible, toggleModal, aboutMeDescription }) => {
@@ -80,18 +94,22 @@ class HomeScreen extends Component<Props> {
       translations: { homeProffesion, homeButton, homeDescription }
     } = this.props;
     return (
-      <GradientView style={{ flex: 1, justifyContent: "center" }}>
-        <Image
-          style={{
-            //width: null,
-            //height: null,
-            flex: 0.5,
-            resizeMode: "contain"
-          }}
-          source={{ uri: "avatar" }}
-        />
-        <Text style={styles.h1}>Remigijus Balčiūnas</Text>
-        <Text style={styles.h2}>{homeProffesion}</Text>
+      <GradientView
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <View style={{ flex: 1 }}>
+          <Image
+            style={{
+              //width: null,
+              //height: null,
+              flex: 0.5,
+              resizeMode: "contain"
+            }}
+            source={{ uri: "avatar" }}
+          />
+          <Text style={styles.h2}>Remigijus Balčiūnas</Text>
+          <Text style={styles.h2}>{homeProffesion}</Text>
+        </View>
         <TouchableOpacity
           style={{
             borderWidth: 1,
@@ -99,24 +117,12 @@ class HomeScreen extends Component<Props> {
             backgroundColor: "darkgrey",
             padding: 8,
             width: "40%",
-            borderRadius: 10,
-            justifyContent: "center"
+            borderRadius: 10
           }}
           onPress={this.toggleModal}
         >
           <Text style={{ textAlign: "center" }}>{homeButton}</Text>
         </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            backgroundColor: "rgba(0,0,0,0.1)",
-            borderRadius: 15,
-            width: "100%"
-          }}
-        >
-          <RemoteAccountsComponent />
-        </View>
         <AboutMeModal
           visible={modalVisible}
           toggleModal={this.toggleModal}

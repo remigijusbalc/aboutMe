@@ -16,17 +16,16 @@ import {
   TouchableOpacity,
   Modal,
   SafeAreaView,
-  ScrollView
+  ScrollView,
+  Alert
 } from "react-native";
 import { WebView } from "react-native-webview";
 import { connect } from "react-redux";
-import { GradientView } from "../components";
-import Icon from "react-native-vector-icons/Feather";
+import { GradientView, Card } from "../components";
 
 const TitleComponent = ({ title }) => {
   return (
     <View style={{ flexDirection: "row", padding: 16 }}>
-      <Icon style={{ margin: 4 }} name="arrow-right-circle" size={25} />
       <Text style={{ fontSize: 25 }}>{title}</Text>
     </View>
   );
@@ -98,21 +97,7 @@ const HobbiesComponent = ({ hobbiesArray, toggleModal }) => {
   return hobbiesArray.map((hobby, idx) => {
     if (hobby.hasOwnProperty("openVideos")) {
       return (
-        <View
-          key={hobby + idx}
-          style={{
-            backgroundColor: "#FFFFFF",
-            borderRadius: 10,
-            borderWidth: 1,
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.8,
-            shadowRadius: 2,
-            elevation: 1,
-            width: "80%",
-            margin: 8
-          }}
-        >
+        <Card>
           <TitleComponent title={hobby.title} />
           <DescriptionComponent description={hobby.description} />
 
@@ -131,28 +116,14 @@ const HobbiesComponent = ({ hobbiesArray, toggleModal }) => {
           >
             {hobby.openVideos}
           </Text>
-        </View>
+        </Card>
       );
     } else
       return (
-        <View
-          style={{
-            backgroundColor: "#FFFFFF",
-            borderRadius: 10,
-            borderWidth: 1,
-            shadowColor: "grey",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.8,
-            shadowRadius: 2,
-            elevation: 1,
-            width: "80%",
-            margin: 8
-          }}
-          key={hobby + idx}
-        >
+        <Card>
           <TitleComponent title={hobby.title} />
           <DescriptionComponent description={hobby.description} />
-        </View>
+        </Card>
       );
   });
 };

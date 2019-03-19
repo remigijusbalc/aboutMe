@@ -18,7 +18,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { skills, TEXT } from "../helpers";
-import { ProgressBar, GradientView } from "../components";
+import { ProgressBar, GradientView, Card } from "../components";
 import { connect } from "react-redux";
 import { Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
@@ -42,6 +42,21 @@ const ExperienceComponent = ({ experience }) => {
     });
   });
   return infoArray;
+};
+
+const EducationComponent = ({ education }) => {
+  return Object.keys(education).map(value => {
+    return (
+      <View
+        style={{
+          flexDirection: "row"
+        }}
+      >
+        <Text style={{ fontWeight: "800" }}>{education[value].title}</Text>
+        <Text>{education[value].value}</Text>
+      </View>
+    );
+  });
 };
 
 class DetailsScreen extends Component {
@@ -79,7 +94,6 @@ class DetailsScreen extends Component {
   render() {
     const { translations } = this.props;
     const { skills } = this.state;
-    console.log(translations.workExperience, "ye");
     return (
       <GradientView style={{ flex: 1 }}>
         <ScrollView>
@@ -131,7 +145,7 @@ class DetailsScreen extends Component {
                     style={{ alignItems: "flex-start" }}
                     name="label"
                     size={20}
-                    color="black"
+                    color="#e0ebfc"
                   />
                   <Text
                     style={{ fontSize: moderateScale(14), marginRight: "auto" }}
@@ -155,41 +169,23 @@ class DetailsScreen extends Component {
               </View>
             );
           })}
-          <Text style={[TEXT.H1, { padding: 8, marginBottom: 16 }]}>
-            {translations.education}
-          </Text>
-          <View
-            key={`educ`}
-            style={{
-              flex: 1,
-              flexDirection: "column",
-              justifyContent: "space-between",
-              marginLeft: 15,
-              marginRight: 15,
-              padding: 5
-            }}
+          <Text
+            style={[
+              TEXT.H1,
+              { padding: 8, marginBottom: 16, fontFamily: "sans-serif-medium" }
+            ]}
           >
-            <Text style={{ fontSize: moderateScale(10) }}>
-              {translations.university}
-            </Text>
-            <Text style={{ fontSize: moderateScale(15) }}>
-              {translations.personalEducation.university}
-            </Text>
-            <Text style={{ fontSize: moderateScale(20) }}>
-              {translations.degree}
-            </Text>
-            <Text style={{ fontSize: moderateScale(15) }}>
-              {translations.personalEducation.degree}
-            </Text>
-            <Text style={{ fontSize: moderateScale(20) }}>
-              {translations.field}
-            </Text>
-            <Text style={{ fontSize: moderateScale(15) }}>
-              {translations.personalEducation.field}
-            </Text>
-          </View>
-          <Text style={TEXT.H1}>{translations.experience}</Text>
-          <ExperienceComponent experience={translations.workExperience} />
+            {translations.education.toUpperCase()}
+          </Text>
+          <Card style={{ flex: 1 }}>
+            <EducationComponent education={translations.personalEducation} />
+          </Card>
+          <Text style={[TEXT.H1, { fontFamily: "sans-serif-medium" }]}>
+            {translations.experience.toUpperCase()}
+          </Text>
+          <Card>
+            <ExperienceComponent experience={translations.workExperience} />
+          </Card>
         </ScrollView>
       </GradientView>
     );
