@@ -1,4 +1,5 @@
 import { getPassedTime } from "./helperFunctions";
+import Store from "../redux/Store";
 
 export const languageImages = {
   lt: "ltflag",
@@ -16,12 +17,21 @@ export const skills = [
   { name: "Java", percent: 30, expanded: false }
 ];
 
-export const remoteAccounts = [
+export const personalInfo = [
   {
-    imageName: "linkedin",
-    uri: "https://www.linkedin.com/in/remigijus-bal%C4%8Di%C5%ABnas-b47152163/"
+    iconName: "linkedin",
+    title:
+      "https://www.linkedin.com/in/remigijus-bal%C4%8Di%C5%ABnas-b47152163/"
   },
-  { imageName: "github", uri: "https://github.com/remigijusbalc" }
+  { iconName: "github", title: "https://github.com/remigijusbalc" },
+  { iconName: "mail", title: "remigijus.balc@gmail.com" },
+  { iconName: "phone", title: "+37063520558" },
+  {
+    iconName: "map-pin",
+    title: Store.getState().language.translations.location,
+    mapsUri:
+      "https://www.google.com/maps/search/?api=1&query=${54.687156,25.279651}"
+  }
 ];
 
 export const workExperience = {
@@ -35,5 +45,5 @@ export default {
   languageImages,
   skills,
   workExperience,
-  remoteAccounts
+  personalInfo
 };
