@@ -9,38 +9,37 @@ import {
   TouchableOpacity,
   Linking
 } from "react-native";
-import { GradientView } from "../components";
-import Icon from "react-native-vector-icons/Feather";
+import { GradientView, MyAvatar } from "../components";
 import { connect } from "react-redux";
-import { remoteAccounts } from "../helpers";
+import { personalInfo } from "../helpers";
+import Icon from "react-native-vector-icons/Feather";
 
-const RemoteAccountsComponent = () => {
-  const children = remoteAccounts.map((account, idx) => {
+const PersonalInfoComponent = () => {
+  openUri = uri => {
+    try {
+      Linking.openURL(uri);
+    } catch (err) {
+      console.log(err);
+      return alert("problem");
+    }
+  };
+  const children = personalInfo.map((account, idx) => {
     return (
       <TouchableOpacity
-        key={account.imageName + idx}
-        onPress={() => Linking.openURL(account.uri)}
+        //hitSlop={}
+        onPress={() => openUri(account.title)}
       >
-        <Image
-          style={{
-            width: 100,
-            height: 100,
-            resizeMode: "contain"
-          }}
-          source={{ uri: account.imageName }}
-        />
+        <View key={idx} style={{ flexDirection: "row", marginLeft: 8 }}>
+          <Icon color="#fff" size={30} name={account.iconName} />
+          <Text style={styles.h2}>{account.title}</Text>
+        </View>
       </TouchableOpacity>
     );
   }, []);
   return (
     <View
       style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        backgroundColor: "rgba(0,0,0,0.1)",
-        borderRadius: 15,
-        width: "90%",
-        padding: 8
+        flexDirection: "column"
       }}
     >
       {children}
@@ -48,26 +47,63 @@ const RemoteAccountsComponent = () => {
   );
 };
 
-const AboutMeModal = ({ visible, toggleModal, aboutMeDescription }) => {
+const AboutMeModal = ({
+  visible,
+  toggleModal,
+  aboutMeDescription,
+  name,
+  proffesion,
+  header
+}) => {
   return (
-    <Modal animationType="fade" transparent={true} visible={visible}>
-      <View
+    <Modal
+      animationType="fade"
+      transparent={true}
+      onRequestClose={toggleModal}
+      visible={true} //visible
+    >
+      <GradientView
         style={{
-          flex: 1,
-          justifyContent: "center",
-          backgroundColor: "rgba(0, 0, 0, 0.5)"
+          flex: 1
         }}
       >
-        <View style={{ backgroundColor: "#fff", padding: 20 }}>
-          <Icon
-            style={{ marginLeft: "auto" }}
-            onPress={toggleModal}
-            name="x-circle"
-            size={20}
-          />
+        <View
+          style={{
+            justifyContent: "space-between",
+            flexDirection: "row"
+          }}
+        >
+          <View style={{ flex: 1 }}>
+            <Text style={styles.h1}>{header}</Text>
+          </View>
+          <View style={{ marginLeft: "auto" }}>
+            <Icon
+              style={{ color: "#fff" }}
+              onPress={toggleModal}
+              name="x-circle"
+              size={100}
+            />
+          </View>
+        </View>
+        <View style={{ flexDirection: "row", backgroundColor: "red" }}>
+          <MyAvatar />
+          <View style={{ flexDirection: "column" }}>
+            <Text style={styles.h1}>{name}</Text>
+            <Text style={styles.h2}>{proffesion}</Text>
+          </View>
+        </View>
+        <PersonalInfoComponent />
+
+        <View
+          style={{
+            backgroundColor: "#bbc0c9",
+            flex: 0.4,
+            margin: 32
+          }}
+        >
           <Text style={{ textAlign: "center" }}>{aboutMeDescription}</Text>
         </View>
-      </View>
+      </GradientView>
     </Modal>
   );
 };
@@ -91,42 +127,36 @@ class HomeScreen extends Component<Props> {
   render() {
     const { modalVisible } = this.state;
     const {
-      translations: { homeProffesion, homeButton, homeDescription }
+      translations: { homeProffesion, aboutMe, homeDescription }
     } = this.props;
+    const name = "Remigijus Balčiūnas";
     return (
-      <GradientView
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-      >
-        <View style={{ flex: 1 }}>
-          <Image
-            style={{
-              //width: null,
-              //height: null,
-              flex: 0.5,
-              resizeMode: "contain"
-            }}
-            source={{ uri: "avatar" }}
-          />
-          <Text style={styles.h2}>Remigijus Balčiūnas</Text>
+      <GradientView style={{ flex: 1 }}>
+        <View style={{ flex: 0.8, justifyContent: "center" }}>
+          <MyAvatar />
+          <Text style={styles.h1}>{name}</Text>
           <Text style={styles.h2}>{homeProffesion}</Text>
         </View>
         <TouchableOpacity
           style={{
-            borderWidth: 1,
-            borderColor: "grey",
-            backgroundColor: "darkgrey",
-            padding: 8,
-            width: "40%",
-            borderRadius: 10
+            backgroundColor: "#f4b642",
+            padding: 16,
+            width: "90%",
+            alignSelf: "center"
           }}
           onPress={this.toggleModal}
         >
-          <Text style={{ textAlign: "center" }}>{homeButton}</Text>
+          <Text style={{ textAlign: "center", color: "#fff", fontSize: 20 }}>
+            {aboutMe}
+          </Text>
         </TouchableOpacity>
         <AboutMeModal
           visible={modalVisible}
           toggleModal={this.toggleModal}
           aboutMeDescription={homeDescription}
+          name={name}
+          proffesion={homeProffesion}
+          header={aboutMe}
         />
       </GradientView>
     );
@@ -149,18 +179,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    backgroundColor: "#F5FCFF",
+    color: "#fff"
   },
   h2: {
     textAlign: "center",
     fontSize: 20,
-    margin: 4
+    color: "#fff"
   },
   h1: {
     textAlign: "center",
     fontWeight: "bold",
-    color: "#333333",
-    fontSize: 20,
+    color: "#fff",
+    fontSize: 40,
     margin: 8
   }
 });
