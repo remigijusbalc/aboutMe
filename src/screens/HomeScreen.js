@@ -14,6 +14,14 @@ import { connect } from "react-redux";
 import { personalInfo } from "../helpers";
 import Icon from "react-native-vector-icons/Feather";
 
+const guidelineBaseWidth = 350;
+const guidelineBaseHeight = 680;
+
+const scale = size => (width / guidelineBaseWidth) * size;
+const verticalScale = size => (height / guidelineBaseHeight) * size;
+const moderateScale = (size, factor = 0.5) =>
+  size + (scale(size) - size) * factor;
+
 const PersonalInfoComponent = () => {
   openUri = uri => {
     try {
@@ -25,13 +33,23 @@ const PersonalInfoComponent = () => {
   };
   const children = personalInfo.map((account, idx) => {
     return (
-      <TouchableOpacity
-        //hitSlop={}
-        onPress={() => openUri(account.title)}
-      >
-        <View key={idx} style={{ flexDirection: "row", marginLeft: 8 }}>
-          <Icon color="#fff" size={30} name={account.iconName} />
-          <Text style={styles.h2}>{account.title}</Text>
+      <TouchableOpacity key={idx} onPress={() => openUri(account.title)}>
+        <View
+          key={idx}
+          style={{
+            flexDirection: "row",
+            marginVertical: 16
+          }}
+        >
+          <Icon
+            style={{ marginRight: 8 }}
+            color="#fff"
+            size={30}
+            name={account.iconName}
+          />
+          <Text numberOfLines={1} ellipsizeMode="tail" style={styles.h2}>
+            {account.title}
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -39,7 +57,8 @@ const PersonalInfoComponent = () => {
   return (
     <View
       style={{
-        flexDirection: "column"
+        flexDirection: "column",
+        marginVertical: 8
       }}
     >
       {children}
@@ -60,11 +79,12 @@ const AboutMeModal = ({
       animationType="fade"
       transparent={true}
       onRequestClose={toggleModal}
-      visible={true} //visible
+      visible={visible} //visible
     >
       <GradientView
         style={{
-          flex: 1
+          flex: 1,
+          padding: 24
         }}
       >
         <View
@@ -85,11 +105,27 @@ const AboutMeModal = ({
             />
           </View>
         </View>
-        <View style={{ flexDirection: "row", backgroundColor: "red" }}>
-          <MyAvatar />
-          <View style={{ flexDirection: "column" }}>
-            <Text style={styles.h1}>{name}</Text>
-            <Text style={styles.h2}>{proffesion}</Text>
+        <View style={{ flex: 1, justifyContent: "space-around" }}>
+          <View
+            style={{
+              flexDirection: "row",
+              //alignItems: "center",
+              //  justifyContent: "flex-start",
+              // backgroundColor: "pink",
+              flex: 0.8
+            }}
+          >
+            <MyAvatar />
+            <View
+              style={{
+                flexDirection: "column",
+                justifyContent: "center",
+                flex: 0.4
+              }}
+            >
+              <Text style={styles.h1}>{name.toUpperCase()}</Text>
+              <Text style={styles.h2}>{proffesion.toUpperCase()}</Text>
+            </View>
           </View>
         </View>
         <PersonalInfoComponent />
@@ -97,11 +133,12 @@ const AboutMeModal = ({
         <View
           style={{
             backgroundColor: "#bbc0c9",
-            flex: 0.4,
-            margin: 32
+            flex: 1
           }}
         >
-          <Text style={{ textAlign: "center" }}>{aboutMeDescription}</Text>
+          <Text style={{ textAlign: "left", margin: 16 }}>
+            {aboutMeDescription}
+          </Text>
         </View>
       </GradientView>
     </Modal>
@@ -132,7 +169,7 @@ class HomeScreen extends Component<Props> {
     const name = "Remigijus Balčiūnas";
     return (
       <GradientView style={{ flex: 1 }}>
-        <View style={{ flex: 0.8, justifyContent: "center" }}>
+        <View style={{ flex: 1, justifyContent: "center" }}>
           <MyAvatar />
           <Text style={styles.h1}>{name}</Text>
           <Text style={styles.h2}>{homeProffesion}</Text>
