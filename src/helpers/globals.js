@@ -29,8 +29,8 @@ export const personalInfo = [
   {
     iconName: "map-pin",
     title: Store.getState().language.translations.location,
-    mapsUri:
-      "https://www.google.com/maps/search/?api=1&query=${54.687156,25.279651}"
+    mapsUri: "geo:54.687156,25.279651"
+    //"https://www.google.com/maps/search/?api=1&query=${}"
   }
 ];
 
