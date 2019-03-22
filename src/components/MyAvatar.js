@@ -9,7 +9,8 @@ export default function MyAvatar({ style = {} }) {
           //width: null,
           //height: null,
           flex: 0.5,
-          resizeMode: "contain"
+          resizeMode: "contain",
+          borderRadius: 9000
         },
         style
       ]}
