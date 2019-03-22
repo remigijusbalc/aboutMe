@@ -17,7 +17,7 @@ export default (ProgressBar = ({ percent, width }) => {
         style={{
           width: barWidth,
           height: "100%",
-          backgroundColor: "#e0ebfc",
+          backgroundColor: "#fff",
           flexWrap: "wrap"
         }}
       />

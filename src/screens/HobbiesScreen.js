@@ -21,18 +21,25 @@ import {
 } from "react-native";
 import { WebView } from "react-native-webview";
 import { connect } from "react-redux";
-import { GradientView, Card } from "../components";
+import { GradientView, Card, HobbyIcon } from "../components";
+import Icon from "react-native-vector-icons/Feather";
 
-const TitleComponent = ({ title }) => {
+const TitleComponent = ({ title, icon, style }) => {
   return (
-    <View style={{ flexDirection: "row", padding: 16 }}>
-      <Text style={{ fontSize: 25 }}>{title}</Text>
+    <View style={style}>
+      <HobbyIcon style={{ color: "#fff" }} name={icon} size={40} />
+      <Text style={{ fontSize: 25, color: "#fff", margin: 8 }}>{title}</Text>
     </View>
   );
 };
 
-const DescriptionComponent = ({ description }) => {
-  return <Text style={{ textAlign: "center", padding: 8 }}>{description}</Text>;
+const DescriptionComponent = ({ description, buttonComponent, style }) => {
+  return (
+    <View style={style}>
+      <Text style={{ textAlign: "center", margin: 8 }}>{description}</Text>
+      {buttonComponent}
+    </View>
+  );
 };
 
 class VideoModal extends React.Component {
@@ -93,66 +100,133 @@ class VideoModal extends React.Component {
   }
 }
 
-const HobbiesComponent = ({ hobbiesArray, toggleModal }) => {
-  return hobbiesArray.map((hobby, idx) => {
-    if (hobby.hasOwnProperty("openVideos")) {
-      return (
-        <Card>
-          <TitleComponent title={hobby.title} />
-          <DescriptionComponent description={hobby.description} />
-
-          <Text
-            style={{
-              alignItems: "center",
-              backgroundColor: "#e0ebfc",
-              textAlign: "center",
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
-              padding: 8,
-              fontSize: 18,
-              fontWeight: "800"
-            }}
-            onPress={toggleModal}
-          >
-            {hobby.openVideos}
-          </Text>
-        </Card>
-      );
-    } else
-      return (
-        <Card>
-          <TitleComponent title={hobby.title} />
-          <DescriptionComponent description={hobby.description} />
-        </Card>
-      );
-  });
-};
-
 class HobbiesScreen extends Component<Props> {
   constructor(props) {
     super(props);
 
+    const {
+      translations: { drumming, jogging, books, football }
+    } = props;
+
+    const primaryColors = ["#2897B0", "#D7971A", "#90A02D"];
+    const secondaryColors = ["#99CED9", "#F7E7C7", "#CED5A2"];
+    const hobbiesIcons = ["drum", "running", "book", "futbol"];
+
+    const hobbies = [drumming, jogging, books, football].reduce(
+      (acc, hobby, index) => {
+        hobby.expanded = false;
+        hobby.primaryColor = primaryColors[index % primaryColors.length];
+        hobby.secondaryColor = secondaryColors[index % secondaryColors.length];
+        hobby.icon = hobbiesIcons[index];
+        acc.push(hobby);
+        return acc;
+      },
+      []
+    );
+
     this.state = {
-      modalVisible: false
+      modalVisible: false,
+      hobbiesArray: hobbies
     };
   }
 
-  toggleModal = hi => {
+  toggleModal = () => {
     return this.setState(prevState => {
       return { modalVisible: !prevState.modalVisible };
     });
   };
+  toggleBox = id => {
+    const { hobbiesArray } = this.state;
+    const updatedHobbiesArray = hobbiesArray.map(value => {
+      if (value === id) value.expanded = !value.expanded;
+      return value;
+    });
+    this.setState({ hobbiesArray: updatedHobbiesArray });
+  };
 
   render() {
-    const { modalVisible } = this.state;
+    const { hobbiesArray, modalVisible } = this.state;
     const {
-      translations: { Hobbies, drumming, jogging, books, football }
+      translations: { Hobbies }
     } = this.props;
+
     return (
       <GradientView style={{ flex: 1 }}>
         <Text style={{ fontSize: 40, textAlign: "center", paddingTop: 8 }}>
           {Hobbies}
         </Text>
+        <ScrollView
+          contentContainerStyle={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          {hobbiesArray.map((hobby, index) => {
+            return (
+              <Card
+                style={{
+                  backgroundColor: hobby.primaryColor,
+                  width: "80%"
+                }}
+              >
+                <TouchableOpacity onPress={this.toggleBox.bind(this, hobby)}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between"
+                    }}
+                  >
+                    <TitleComponent
+                      style={{ flexDirection: "row", margin: 8 }}
+                      icon={hobby.icon}
+                      title={hobby.title}
+                    />
+                    <Icon
+                      style={{ margin: 8 }}
+                      color="#fff"
+                      name="arrow-down-circle"
+                      size={40}
+                    />
+                  </View>
+                  {hobby.expanded ? (
+                    <DescriptionComponent
+                      style={{
+                        flexDirection: "column",
+                        backgroundColor: hobby.secondaryColor,
+                        width: "100%"
+                      }}
+                      description={hobby.description}
+                      buttonComponent={
+                        hobby.hasOwnProperty("openVideos") ? (
+                          <TouchableOpacity
+                            style={{ margin: 8 }}
+                            onPress={this.toggleModal}
+                          >
+                            <Text
+                              style={{
+                                alignSelf: "center",
+                                backgroundColor: hobby.primaryColor,
+                                textAlign: "center",
+                                width: "20%",
+                                fontSize: 18,
+                                fontWeight: "800",
+                                color: "#fff"
+                              }}
+                            >
+                              {hobby.openVideos}
+                            </Text>
+                          </TouchableOpacity>
+                        ) : null
+                      }
+                    />
+                  ) : null}
+                </TouchableOpacity>
+              </Card>
+            );
+          })}
+        </ScrollView>
         <VideoModal
           visible={modalVisible}
           closeModal={this.toggleModal}
@@ -162,18 +236,6 @@ class HobbiesScreen extends Component<Props> {
             "https://www.youtube.com/embed/kTJYf1y5PzM"
           ]}
         />
-        <ScrollView
-          contentContainerStyle={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <HobbiesComponent
-            toggleModal={this.toggleModal}
-            hobbiesArray={[drumming, jogging, books, football]}
-          />
-        </ScrollView>
       </GradientView>
     );
   }

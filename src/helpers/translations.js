@@ -14,9 +14,13 @@ export default (DICTIONARY = {
     lt: "Mobilių aplikacijų kūrėjas",
     en: "Mobile application developer"
   },
-  homeButton: {
-    lt: "Plačiau",
-    en: "More"
+  aboutMe: {
+    lt: "Apie mane",
+    en: "About me"
+  },
+  location: {
+    lt: "Vilnius, Lietuva",
+    en: "Vilnius, Lithuania"
   },
   homeDescription: {
     lt: "As Remis esu is tadada",
