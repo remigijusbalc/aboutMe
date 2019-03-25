@@ -7,15 +7,19 @@ import {
   Image,
   Modal,
   TouchableOpacity,
-  Linking
+  Linking,
+  Dimensions
 } from "react-native";
-import { GradientView, MyAvatar } from "../components";
+import { GradientView, MyAvatar, Button } from "../components";
 import { connect } from "react-redux";
 import { personalInfo } from "../helpers";
 import Icon from "react-native-vector-icons/Feather";
+import { LanguageChangeComponent } from "../components/LanguageComponent";
+import { setLanguage } from "../redux/actions";
 
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
+const { width, height } = Dimensions.get("screen");
 
 const scale = size => (width / guidelineBaseWidth) * size;
 const verticalScale = size => (height / guidelineBaseHeight) * size;
@@ -23,9 +27,10 @@ const moderateScale = (size, factor = 0.5) =>
   size + (scale(size) - size) * factor;
 
 const PersonalInfoComponent = () => {
-  openUri = uri => {
+  openUri = url => {
     try {
-      Linking.openURL(uri);
+      console.log(url, "ur");
+      Linking.openURL(url);
     } catch (err) {
       console.log(err);
       return alert("problem");
@@ -33,7 +38,7 @@ const PersonalInfoComponent = () => {
   };
   const children = personalInfo.map((account, idx) => {
     return (
-      <TouchableOpacity key={idx} onPress={() => openUri(account.title)}>
+      <TouchableOpacity key={idx} onPress={() => openUri(account.url)}>
         <View
           key={idx}
           style={{
@@ -58,7 +63,8 @@ const PersonalInfoComponent = () => {
     <View
       style={{
         flexDirection: "column",
-        marginVertical: 8
+        marginVertical: 8,
+        paddingRight: 12
       }}
     >
       {children}
@@ -84,13 +90,16 @@ const AboutMeModal = ({
       <GradientView
         style={{
           flex: 1,
-          padding: 24
+          paddingHorizontal: 24,
+          paddingBottom: 16
         }}
       >
         <View
           style={{
             justifyContent: "space-between",
-            flexDirection: "row"
+            flexDirection: "row",
+            alignItems: "center",
+            margin: 8
           }}
         >
           <View style={{ flex: 1 }}>
@@ -101,33 +110,32 @@ const AboutMeModal = ({
               style={{ color: "#fff" }}
               onPress={toggleModal}
               name="x-circle"
-              size={100}
+              size={30}
             />
           </View>
         </View>
-        <View style={{ flex: 1, justifyContent: "space-around" }}>
+
+        <View
+          style={{
+            flexDirection: "row",
+            //alignItems: "center",
+            justifyContent: "space-evenly",
+            flex: 1
+          }}
+        >
+          <MyAvatar />
           <View
             style={{
-              flexDirection: "row",
-              //alignItems: "center",
-              //  justifyContent: "flex-start",
-              // backgroundColor: "pink",
-              flex: 0.8
+              flexDirection: "column",
+              //  justifyContent: "center"
+              flex: 0.5
             }}
           >
-            <MyAvatar />
-            <View
-              style={{
-                flexDirection: "column",
-                justifyContent: "center",
-                flex: 0.4
-              }}
-            >
-              <Text style={styles.h1}>{name.toUpperCase()}</Text>
-              <Text style={styles.h2}>{proffesion.toUpperCase()}</Text>
-            </View>
+            <Text style={styles.h1}>{name.toUpperCase()}</Text>
+            <Text style={styles.h2}>{proffesion.toUpperCase()}</Text>
           </View>
         </View>
+
         <PersonalInfoComponent />
 
         <View
@@ -154,6 +162,9 @@ class HomeScreen extends Component<Props> {
       modalVisible: false
     };
   }
+  navigateTo = screen => {
+    this.props.changePage(screen);
+  };
 
   toggleModal = () => {
     this.setState(prevState => {
@@ -169,24 +180,43 @@ class HomeScreen extends Component<Props> {
     const name = "Remigijus Balčiūnas";
     return (
       <GradientView style={{ flex: 1 }}>
+        <LanguageChangeComponent
+          style={{ margin: 8 }}
+          onSelect={this.props.setLanguage.bind(this)}
+        />
         <View style={{ flex: 1, justifyContent: "center" }}>
           <MyAvatar />
           <Text style={styles.h1}>{name}</Text>
           <Text style={styles.h2}>{homeProffesion}</Text>
         </View>
-        <TouchableOpacity
-          style={{
-            backgroundColor: "#f4b642",
-            padding: 16,
-            width: "90%",
-            alignSelf: "center"
-          }}
-          onPress={this.toggleModal}
-        >
-          <Text style={{ textAlign: "center", color: "#fff", fontSize: 20 }}>
-            {aboutMe}
-          </Text>
-        </TouchableOpacity>
+        <View style={{ alignItems: "center" }}>
+          <Button
+            onPress={this.toggleModal}
+            title={aboutMe}
+            style={{
+              backgroundColor: "#2897B0",
+              margin: 8
+            }}
+          />
+          <Button
+            onPress={this.navigateTo.bind(this, "Details")}
+            title="Details"
+            style={{
+              margin: 8,
+              backgroundColor: "#D7971A"
+            }}
+          />
+
+          <Button
+            onPress={this.navigateTo.bind(this, "Hobbies")}
+            title="Hobbies"
+            style={{
+              margin: 8,
+              backgroundColor: "#90A02D"
+            }}
+          />
+        </View>
+
         <AboutMeModal
           visible={modalVisible}
           toggleModal={this.toggleModal}
@@ -208,7 +238,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  null
+  { setLanguage }
 )(HomeScreen);
 
 const styles = StyleSheet.create({
@@ -221,14 +251,14 @@ const styles = StyleSheet.create({
   },
   h2: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: moderateScale(16),
     color: "#fff"
   },
   h1: {
     textAlign: "center",
     fontWeight: "bold",
     color: "#fff",
-    fontSize: 40,
+    fontSize: moderateScale(20),
     margin: 8
   }
 });
