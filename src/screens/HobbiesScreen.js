@@ -17,9 +17,11 @@ import {
   Modal,
   SafeAreaView,
   ScrollView,
-  Alert
+  Alert,
+  WebView,
+  Animated
 } from "react-native";
-import { WebView } from "react-native-webview";
+//import { WebView } from "react-native-webview";
 import { connect } from "react-redux";
 import { GradientView, Card, HobbyIcon } from "../components";
 import Icon from "react-native-vector-icons/Feather";
@@ -33,11 +35,11 @@ const TitleComponent = ({ title, icon, style }) => {
   );
 };
 
-const DescriptionComponent = ({ description, buttonComponent, style }) => {
+const DescriptionComponent = ({ children, description, style, ...props }) => {
   return (
-    <View style={style}>
+    <View {...props} style={style}>
       <Text style={{ textAlign: "center", margin: 8 }}>{description}</Text>
-      {buttonComponent}
+      {children}
     </View>
   );
 };
@@ -104,34 +106,51 @@ class HobbiesScreen extends Component<Props> {
   constructor(props) {
     super(props);
 
-    const {
-      translations: { drumming, jogging, books, football }
-    } = props;
-
-    const primaryColors = ["#2897B0", "#D7971A", "#90A02D"];
-    const secondaryColors = ["#99CED9", "#F7E7C7", "#CED5A2"];
-    const hobbiesIcons = ["drum", "running", "book", "futbol"];
-
-    const hobbies = [drumming, jogging, books, football].reduce(
-      (acc, hobby, index) => {
-        hobby.expanded = false;
-        hobby.primaryColor = primaryColors[index % primaryColors.length];
-        hobby.secondaryColor = secondaryColors[index % secondaryColors.length];
-        hobby.icon = hobbiesIcons[index];
-        acc.push(hobby);
-        return acc;
-      },
-      []
-    );
+    this.primaryColors = ["#2897B0", "#D7971A", "#90A02D"];
+    this.secondaryColors = ["#99CED9", "#F7E7C7", "#CED5A2"];
+    this.hobbiesIcons = ["drum", "running", "book", "futbol"];
 
     this.state = {
       modalVisible: false,
-      hobbiesArray: hobbies
+      hobbiesArray: []
     };
   }
 
+  componentDidMount() {
+    const {
+      translations: { drumming, jogging, books, football }
+    } = this.props;
+    this.updateHobbiesArray([drumming, jogging, books, football]);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.props.translations !== nextProps.translations) {
+      const {
+        translations: { drumming, jogging, books, football }
+      } = nextProps;
+      this.updateHobbiesArray([drumming, jogging, books, football]);
+    }
+    return true;
+  }
+
+  updateHobbiesArray = array => {
+    const hobbies = array.reduce((acc, hobby, index) => {
+      hobby.expanded = false;
+      hobby.primaryColor = this.primaryColors[
+        index % this.primaryColors.length
+      ];
+      hobby.secondaryColor = this.secondaryColors[
+        index % this.secondaryColors.length
+      ];
+      hobby.icon = this.hobbiesIcons[index];
+      acc.push(hobby);
+      return acc;
+    }, []);
+    this.setState({ hobbiesArray: hobbies });
+  };
+
   toggleModal = () => {
-    return this.setState(prevState => {
+    this.setState(prevState => {
       return { modalVisible: !prevState.modalVisible };
     });
   };
@@ -165,6 +184,7 @@ class HobbiesScreen extends Component<Props> {
           {hobbiesArray.map((hobby, index) => {
             return (
               <Card
+                key={hobby.primaryColor + index}
                 style={{
                   backgroundColor: hobby.primaryColor,
                   width: "80%"
@@ -186,7 +206,9 @@ class HobbiesScreen extends Component<Props> {
                     <Icon
                       style={{ margin: 8 }}
                       color="#fff"
-                      name="arrow-down-circle"
+                      name={
+                        hobby.expanded ? "arrow-up-circle" : "arrow-down-circle"
+                      }
                       size={40}
                     />
                   </View>
@@ -198,29 +220,28 @@ class HobbiesScreen extends Component<Props> {
                         width: "100%"
                       }}
                       description={hobby.description}
-                      buttonComponent={
-                        hobby.hasOwnProperty("openVideos") ? (
-                          <TouchableOpacity
-                            style={{ margin: 8 }}
-                            onPress={this.toggleModal}
+                    >
+                      {hobby.hasOwnProperty("openVideos") ? (
+                        <TouchableOpacity
+                          style={{ margin: 8 }}
+                          onPress={this.toggleModal}
+                        >
+                          <Text
+                            style={{
+                              alignSelf: "center",
+                              backgroundColor: hobby.primaryColor,
+                              textAlign: "center",
+                              fontSize: 18,
+                              fontWeight: "800",
+                              color: "#fff",
+                              padding: 8
+                            }}
                           >
-                            <Text
-                              style={{
-                                alignSelf: "center",
-                                backgroundColor: hobby.primaryColor,
-                                textAlign: "center",
-                                width: "20%",
-                                fontSize: 18,
-                                fontWeight: "800",
-                                color: "#fff"
-                              }}
-                            >
-                              {hobby.openVideos}
-                            </Text>
-                          </TouchableOpacity>
-                        ) : null
-                      }
-                    />
+                            {hobby.openVideos}
+                          </Text>
+                        </TouchableOpacity>
+                      ) : null}
+                    </DescriptionComponent>
                   ) : null}
                 </TouchableOpacity>
               </Card>
