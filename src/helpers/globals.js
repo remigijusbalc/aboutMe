@@ -21,9 +21,14 @@ export const skills = [
 export const personalInfo = [
   {
     iconName: "linkedin",
-    title: "www.linkedin.com/in/remigijusbalc"
+    title: "www.linkedin.com/in/remigijusbalc",
+    url: "https://github.com/remigijusbalc"
   },
-  { iconName: "github", title: "https://github.com/remigijusbalc" },
+  {
+    iconName: "github",
+    title: "https://github.com/remigijusbalc",
+    url: "https://github.com/remigijusbalc"
+  },
   {
     iconName: "mail",
     title: "remigijus.balc@gmail.com",
