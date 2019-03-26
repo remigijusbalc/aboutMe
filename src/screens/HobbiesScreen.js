@@ -17,20 +17,22 @@ import {
   Modal,
   SafeAreaView,
   ScrollView,
-  Alert,
-  WebView,
-  Animated
+  Alert
 } from "react-native";
-//import { WebView } from "react-native-webview";
 import { connect } from "react-redux";
-import { GradientView, Card, HobbyIcon } from "../components";
+import { GradientView, Card, HobbyIcon, VideoModal } from "../components";
 import Icon from "react-native-vector-icons/Feather";
+import { STYLES, moderateScale } from "../helpers";
 
 const TitleComponent = ({ title, icon, style }) => {
   return (
     <View style={style}>
-      <HobbyIcon style={{ color: "#fff" }} name={icon} size={40} />
-      <Text style={{ fontSize: 25, color: "#fff", margin: 8 }}>{title}</Text>
+      <HobbyIcon
+        style={STYLES.ICON}
+        name={icon}
+        // size={moderateScale(40)}
+      />
+      <Text style={[STYLES.H2, { margin: 8, letterSpacing: 1 }]}>{title}</Text>
     </View>
   );
 };
@@ -38,76 +40,18 @@ const TitleComponent = ({ title, icon, style }) => {
 const DescriptionComponent = ({ children, description, style, ...props }) => {
   return (
     <View {...props} style={style}>
-      <Text style={{ textAlign: "center", margin: 8 }}>{description}</Text>
+      <Text style={[STYLES.BODY, { margin: 8 }]}>{description}</Text>
       {children}
     </View>
   );
 };
-
-class VideoModal extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  handleWebviewError = uri => {
-    const {
-      closeModal,
-      errorTextTitle,
-      errorTextDescription,
-      alertOK,
-      alertNO
-    } = this.props;
-    closeModal();
-    return Alert.alert(errorTextTitle, errorTextDescription, [
-      { text: alertOK, onPress: () => Linking.openURL(uri) },
-      {
-        text: alertNO,
-        onPress: () => {
-          return;
-        }
-      }
-    ]);
-  };
-
-  render() {
-    const { visible, closeModal, videoUris, closeModalText } = this.props;
-    return (
-      <Modal visible={visible} style={{ flex: 1 }}>
-        <TouchableOpacity
-          style={{
-            borderColor: "lightgrey",
-            backgroundColor: "#CC181E",
-            padding: 8
-          }}
-          onPress={closeModal}
-        >
-          <Text style={{ textAlign: "center" }}>{closeModalText}</Text>
-        </TouchableOpacity>
-
-        <SafeAreaView style={{ flex: 1 }}>
-          {videoUris.map(videoUri => {
-            return (
-              <WebView
-                onError={() => this.handleWebviewError(videoUri)}
-                key={videoUri}
-                javaScriptEnabled={true}
-                domStorageEnabled={true}
-                source={{ uri: videoUri }}
-              />
-            );
-          })}
-        </SafeAreaView>
-      </Modal>
-    );
-  }
-}
 
 class HobbiesScreen extends Component<Props> {
   constructor(props) {
     super(props);
 
     this.primaryColors = ["#2897B0", "#D7971A", "#90A02D"];
-    this.secondaryColors = ["#99CED9", "#F7E7C7", "#CED5A2"];
+    this.secondaryColors = ["#99CED9", "#e2b75f", "#CED5A2"];
     this.hobbiesIcons = ["drum", "running", "book", "futbol"];
 
     this.state = {
@@ -166,13 +110,13 @@ class HobbiesScreen extends Component<Props> {
   render() {
     const { hobbiesArray, modalVisible } = this.state;
     const {
-      translations: { Hobbies }
+      translations: { Hobbies, closeModal }
     } = this.props;
 
     return (
       <GradientView style={{ flex: 1 }}>
-        <Text style={{ fontSize: 40, textAlign: "center", paddingTop: 8 }}>
-          {Hobbies}
+        <Text style={[STYLES.H1, { paddingTop: 8 }]}>
+          {Hobbies.toUpperCase()}
         </Text>
         <ScrollView
           contentContainerStyle={{
@@ -199,17 +143,24 @@ class HobbiesScreen extends Component<Props> {
                     }}
                   >
                     <TitleComponent
-                      style={{ flexDirection: "row", margin: 8 }}
+                      style={{
+                        flexDirection: "row",
+                        marginLeft: 8,
+                        alignItems: "center"
+                      }}
                       icon={hobby.icon}
                       title={hobby.title}
                     />
                     <Icon
-                      style={{ margin: 8 }}
+                      style={{
+                        fontSize: moderateScale(20),
+                        paddingRight: 4
+                      }}
                       color="#fff"
                       name={
                         hobby.expanded ? "arrow-up-circle" : "arrow-down-circle"
                       }
-                      size={40}
+                      // size={40}
                     />
                   </View>
                   {hobby.expanded ? (

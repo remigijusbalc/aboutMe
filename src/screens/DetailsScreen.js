@@ -17,21 +17,11 @@ import {
   TouchableOpacity
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { skills, TEXT } from "../helpers";
+import { skills, STYLES, moderateScale } from "../helpers";
 import { ProgressBar, GradientView, Card } from "../components";
 import { connect } from "react-redux";
 import { Dimensions } from "react-native";
-const { width, height } = Dimensions.get("window");
 import Store from "../redux/Store";
-
-//Guideline sizes are based on standard ~5" screen mobile device
-const guidelineBaseWidth = 350;
-const guidelineBaseHeight = 680;
-
-const scale = size => (width / guidelineBaseWidth) * size;
-const verticalScale = size => (height / guidelineBaseHeight) * size;
-const moderateScale = (size, factor = 0.5) =>
-  size + (scale(size) - size) * factor;
 
 const ExperienceComponent = ({ experience }) => {
   const children = Object.keys(experience).reduce((acc, company) => {
@@ -51,7 +41,9 @@ const ExperienceComponent = ({ experience }) => {
   }, []);
 
   return (
-    <Card style={{ flex: 1, backgroundColor: "#2897B0" }}>{children}</Card>
+    <Card style={{ flex: 1, backgroundColor: "#2897B0", padding: 8 }}>
+      {children}
+    </Card>
   );
 };
 
@@ -64,22 +56,29 @@ const EducationComponent = ({ education }) => {
           flexDirection: "row"
         }}
       >
-        <Text style={styles.cardTextHeader}>{education[value].title}</Text>
-        <Text style={styles.cardText}>{education[value].value}</Text>
+        <Text key={value} style={styles.cardTextHeader}>
+          {education[value].title}
+        </Text>
+        <Text key={value} style={styles.cardText}>
+          {education[value].value}
+        </Text>
       </View>
     );
   });
 
   return (
-    <Card style={{ flex: 1, backgroundColor: "#D7971A" }}>{children}</Card>
+    <Card style={{ flex: 1, backgroundColor: "#D7971A", padding: 8 }}>
+      {children}
+    </Card>
   );
 };
 
 const SkillsComponent = ({}) => {
   return skills.map((skill, i) => {
     return (
-      <View style={{ flexDirection: "row" }}>
+      <View key={skill} style={{ flexDirection: "row" }}>
         <Text
+          key={skill}
           style={{
             fontSize: moderateScale(12),
             marginRight: "auto",
@@ -99,12 +98,12 @@ class DetailsScreen extends Component {
   render() {
     const { translations } = this.props;
     return (
-      <GradientView style={{ flex: 1 }}>
+      <GradientView style={{ flex: 1, padding: 8 }}>
         <ScrollView>
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "center"
+              justifyContent: "space-evenly"
             }}
           >
             <Text style={styles.headerText}>
@@ -143,23 +142,25 @@ export default connect(
 
 const styles = StyleSheet.create({
   headerText: {
-    ...TEXT.H1,
+    ...STYLES.H1,
     //padding: 8,
-    marginBottom: 16,
+    margin: moderateScale(8),
     fontFamily: "sans-serif-medium",
     color: "#fff"
   },
   cardTextHeader: {
-    ...TEXT.H2,
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 16,
     fontFamily: "sans-serif-medium",
     color: "#fff"
   },
   cardText: {
-    ...TEXT.H2,
-    marginBottom: 16,
+    fontSize: moderateScale(16),
+    marginBottom: moderateScale(16),
+    marginLeft: moderateScale(8),
     fontFamily: "sans-serif-medium",
-    color: "#fff"
+    color: "#fff",
+    flexShrink: 1
   }
 });
