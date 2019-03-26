@@ -2,7 +2,7 @@ import { getPassedTime, getLocationTitle } from "./helperFunctions";
 
 export const languageImages = {
   lt: "ltflag",
-  en: "usflag"
+  en: "ukflag"
 };
 
 export const skills = [
