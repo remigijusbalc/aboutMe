@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Modal, View, TouchableOpacity, Alert, Text } from "react-native";
+import {
+  Modal,
+  View,
+  TouchableOpacity,
+  Alert,
+  Text,
+  Linking
+} from "react-native";
 import { moderateScale, STYLES, personalInfo } from "../helpers";
 import { MyAvatar, GradientView } from "./";
 import Icon from "react-native-vector-icons/Feather";
@@ -12,9 +19,11 @@ const PersonalInfoComponent = ({ translations }) => {
       Linking.openURL(url);
     } catch (err) {
       console.log(err);
-      return Alert.alert(translations.errorTextTitle, errorDescription, [
-        { text: translations.understood, onPress: () => {} }
-      ]);
+      return Alert.alert(
+        translations.errorTextTitle,
+        translations.errorDescription,
+        [{ text: translations.understood, onPress: () => {} }]
+      );
     }
   };
   const children = personalInfo.map((account, idx) => {
@@ -68,6 +77,7 @@ class AboutMeModal extends Component {
         errorTextTitle
       }
     } = this.props;
+    console.log(this.props, "props");
     return (
       <Modal
         animationType="fade"
