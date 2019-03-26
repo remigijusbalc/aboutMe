@@ -54,6 +54,10 @@ export default (DICTIONARY = {
       field: { title: "Field", value: "Smart Device Technology" }
     }
   },
+  errorDescription: {
+    lt: "Įvyko klaidą atidarant pasirinktą elementa",
+    en: "There was an error opening chosen element"
+  },
   Details: {
     lt: "Įgudžiai",
     en: "Skills"
@@ -93,6 +97,31 @@ export default (DICTIONARY = {
   books: {
     lt: { title: "Skaitymas", description: "Megstu skaityti knygas" },
     en: { title: "Reading books", description: "I like to read books" }
+  },
+  closeModalText: {
+    lt: "Uždaryti",
+    en: "Close"
+  },
+  errorTextTitle: {
+    lt: "Klaida",
+    en: "Error"
+  },
+  errorTextDescription: {
+    lt: "Įvyko klaida kraunant vaizdo įrašus. Ar norite atidaryti naršyklėje?",
+    en:
+      "There was an error loading videos, do you want to open video in the browser?"
+  },
+  alertOK: {
+    lt: "Gerai",
+    en: "Yes"
+  },
+  alertNO: {
+    lt: "Ne",
+    en: "No"
+  },
+  understood: {
+    lt: "Supratau",
+    en: "Got it"
   }
 });
 
