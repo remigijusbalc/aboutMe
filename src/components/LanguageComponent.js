@@ -9,7 +9,11 @@ export default (LanguageComponent = ({ onSelect }) => {
       <TouchableOpacity key={value} onPress={() => onSelect(value)}>
         <Image
           key={value}
-          style={{ width: 150, height: 150 }}
+          style={{
+            width: 90,
+            height: 90,
+            resizeMode: "contain"
+          }}
           source={{ uri: languageImages[value] }}
         />
       </TouchableOpacity>

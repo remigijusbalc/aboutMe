@@ -5,3 +5,5 @@ export { default as Card } from "./Card";
 export { default as MyAvatar } from "./MyAvatar";
 export { default as HobbyIcon } from "./HobbyIcon";
 export { default as Button } from "./Button";
+export { default as VideoModal } from "./VideoModal";
+export { default as AboutMeModal } from "./AboutMeModal";
