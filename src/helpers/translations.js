@@ -55,7 +55,7 @@ export default (DICTIONARY = {
     }
   },
   errorDescription: {
-    lt: "Įvyko klaidą atidarant pasirinktą elementa",
+    lt: "Įvyko klaidą atidarant pasirinktą elementą",
     en: "There was an error opening chosen element"
   },
   Details: {
