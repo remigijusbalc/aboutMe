@@ -23,8 +23,10 @@ export default (DICTIONARY = {
     en: "Vilnius, Lithuania"
   },
   homeDescription: {
-    lt: "As Remis esu is tadada",
-    en: "Im rmgl from lt"
+    lt:
+      "Esu 22 metų jaunesnysis mobiliųjų aplikacijų kūrėjas. Šiais metais, baigęs studijas, supratau, kad mano mėgstamiausia programavimo šaka - aplikacijų kūrimas. Dabar nuosekliai siekiu tobulėti, todėl ieškau galimybių išvykti stažuotis į užsienį. Esu punktualus, mėgstų spęsti problemas, nes esu iš Panevežio bei myliu programavimą.",
+    en:
+      "I am 22 years old junior mobile developer. After graduating I understood that my favorite programming field is application development. Now I am seeking to improve myself in this field. I also would like to try native app development and learn from the best ones. I am punctual and I love problem-solving as much as programming it self."
   },
   workExperience: {
     lt: getWorkExperience("lt"),
@@ -77,26 +79,52 @@ export default (DICTIONARY = {
   drumming: {
     lt: {
       title: "Grojimas būgnais",
-      description: "Groju bugnais blablabla",
+      description:
+        "Jau 12 metų groju būgnais, koncertuoju su įvairaus stiliaus grupėmis, taip pat, dalyvavau būgninkų konkurse. ",
       openVideos: "Peržiūrėti"
     },
     en: {
       title: "Drumming",
-      description: "I play drums blablalba",
+      description:
+        "I am playing drums for 12 years now. I play various styles of music with a few bands. I also participated in drummers contest which you can check down below. ",
       openVideos: "Check out"
     }
   },
   football: {
-    lt: { title: "Futbolas", description: "Megstu zaisti futbola" },
-    en: { title: "Football", description: "I like to play football" }
+    lt: {
+      title: "Futbolas",
+      description:
+        "Futbolas yra mano mėgtstamiausia sporto šaka nuo pat vaikystės. Įdomu tai, kad pats varžybų stebėjimas manęs nedomina taip, kaip pats žaidimas."
+    },
+    en: {
+      title: "Football",
+      description:
+        "Football is my favorite sport since childhood. Interseting fact is that I prefer playing rather than watching. "
+    }
   },
   jogging: {
-    lt: { title: "Bėgiojimas", description: "Man patinka begioti" },
-    en: { title: "Jogging", description: "I like jogging" }
+    lt: {
+      title: "Bėgiojimas",
+      description:
+        "Bėgioti pradėjau norėdamas ne tik fiziškai, bet ir psichologiškai sustiprėti. Tai veikla, kuri padeda lengviau susitvarkyti su įvairaus tipo sunkumais."
+    },
+    en: {
+      title: "Jogging",
+      description:
+        "I started jogging to embrace my physical and psychological abilities. It helps me to achieve the best results."
+    }
   },
   books: {
-    lt: { title: "Skaitymas", description: "Megstu skaityti knygas" },
-    en: { title: "Reading books", description: "I like to read books" }
+    lt: {
+      title: "Skaitymas",
+      description:
+        "Skaitymas padeda ne tik nurimti dienos pabaigoje, bet ir plečia pasaulėžiūrą, leidžia pažiūrėti į viską kitu kampu."
+    },
+    en: {
+      title: "Reading books",
+      description:
+        "After a long day reading books helps me to relieve stress and also it changes the way I think."
+    }
   },
   closeModalText: {
     lt: "Uždaryti",
