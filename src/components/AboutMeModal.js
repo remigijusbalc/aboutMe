@@ -165,7 +165,13 @@ class AboutMeModal extends Component {
               flex: 1
             }}
           >
-            <Text style={{ textAlign: "left", margin: 16 }}>
+            <Text
+              style={{
+                textAlign: "left",
+                margin: 16,
+                fontSize: moderateScale(12)
+              }}
+            >
               {homeDescription}
             </Text>
           </View>
