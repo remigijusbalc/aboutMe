@@ -24,7 +24,7 @@ export default (DICTIONARY = {
   },
   homeDescription: {
     lt:
-      "Esu 22 metų jaunesnysis mobiliųjų aplikacijų kūrėjas. Šiais metais, baigęs studijas, supratau, kad mano mėgstamiausia programavimo šaka - aplikacijų kūrimas. Dabar nuosekliai siekiu tobulėti, todėl ieškau galimybių išvykti stažuotis į užsienį. Esu punktualus, mėgstų spęsti problemas, nes esu iš Panevežio bei myliu programavimą.",
+      "Esu 22 metų jaunesnysis mobiliųjų aplikacijų kūrėjas. Šiais metais, baigęs studijas, supratau, kad mano mėgstamiausia programavimo šaka - aplikacijų kūrimas. Dabar nuosekliai siekiu tobulėti, todėl ieškau galimybių išvykti stažuotis į užsienį. Esu punktualus, mėgstų spręsti problemas, nes esu iš Panevežio bei myliu programavimą.",
     en:
       "I am 22 years old junior mobile developer. After graduating I understood that my favorite programming field is application development. Now I am seeking to improve myself in this field. I also would like to try native app development and learn from the best ones. I am punctual and I love problem-solving as much as programming it self."
   },

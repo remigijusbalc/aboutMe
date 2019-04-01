@@ -13,7 +13,6 @@ export const skills = [
   { name: "Node.js", percent: 60 },
   { name: "C#", percent: 40 },
   { name: "Photoshop", percent: 50 },
-  { name: "Java", percent: 30 },
   { name: "Git", percent: 60 },
   { name: "SQL", percent: 50 }
 ];
@@ -21,8 +20,8 @@ export const skills = [
 export const personalInfo = [
   {
     iconName: "linkedin",
-    title: "www.linkedin.com/in/remigijusbalc",
-    url: "https://github.com/remigijusbalc"
+    title: "https://linkedin.com/in/remigijusbalc",
+    url: "https://linkedin.com/in/remigijusbalc"
   },
   {
     iconName: "github",
@@ -45,8 +44,14 @@ export const personalInfo = [
 
 export const workExperience = {
   "Lexita UAB": {
-    lt: { title: "Aplikacijų kūrėjas", duration: getPassedTime("lt") },
-    en: { title: "Mobile developer", duration: getPassedTime("en") }
+    lt: {
+      title: "Aplikacijų kūrėjas",
+      duration: getPassedTime("lt", ["2018", "05", "14"])
+    },
+    en: {
+      title: "Mobile developer",
+      duration: getPassedTime("en", ["2018", "05", "14"])
+    }
   }
 };
 
