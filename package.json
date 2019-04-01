@@ -9,7 +9,9 @@
     "ios": "cd ios && open aboutMe.xcodeproj",
     "f:start": "flow",
     "f:stop": "flow stop",
-    "debugger": "remotedev-debugger --hostname localhost --port 5678 --injectserver"
+    "debugger": "remotedev-debugger --hostname localhost --port 5678 --injectserver",
+    "android:install": "adb install android/app/build/outputs/apk/release/app-release.apk",
+    "android:deploy": "cd android && ./gradlew clean && ./gradlew assembleRelease"
   },
   "dependencies": {
     "moment": "^2.24.0",
