@@ -167,9 +167,9 @@ class AboutMeModal extends Component {
           >
             <Text
               style={{
-                textAlign: "left",
-                margin: 16,
-                fontSize: moderateScale(12)
+                flex: 1,
+                flexWrap: "wrap",
+                margin: 16
               }}
             >
               {homeDescription}
