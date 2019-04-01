@@ -2,9 +2,9 @@ import moment from "moment/min/moment-with-locales";
 import { workExperience } from "./globals";
 import Store from "../redux/Store";
 
-export const getPassedTime = lang => {
+export const getPassedTime = (lang, duration) => {
   moment.locale(lang);
-  const startDate = moment(["2018", "05", "14"]);
+  const startDate = moment(duration);
   return moment(startDate).fromNow(true);
 };
 
