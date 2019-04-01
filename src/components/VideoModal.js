@@ -4,7 +4,9 @@ import {
   View,
   Text,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
+  Linking,
+  Alert
 } from "react-native";
 import { connect } from "react-redux";
 import { moderateScale } from "../helpers";
@@ -17,13 +19,8 @@ class VideoModal extends React.Component {
 
   handleWebviewError = uri => {
     const {
-      translations: {
-        closeModal,
-        errorTextTitle,
-        errorTextDescription,
-        alertOK,
-        alertNO
-      }
+      closeModal,
+      translations: { errorTextTitle, errorTextDescription, alertOK, alertNO }
     } = this.props;
     closeModal();
     return Alert.alert(
@@ -74,7 +71,7 @@ class VideoModal extends React.Component {
           {videoUris.map(videoUri => {
             return (
               <WebView
-                onError={() => this.handleWebviewError(videoUri)}
+                onError={this.handleWebviewError.bind(this, videoUri)}
                 key={videoUri}
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
