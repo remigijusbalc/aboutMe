@@ -1,4 +1,5 @@
 import React from "react";
+import { BackHandler } from "react-native";
 import Swiper from "react-native-swiper";
 import HomeScreen from "./HomeScreen";
 import DetailsScreen from "./DetailsScreen";
@@ -9,10 +10,6 @@ export default class SwipeParent extends React.Component {
     super(props);
 
     this.availableScreens = ["Home", "Details", "Hobbies"];
-
-    this.state = {
-      index: 0
-    };
   }
 
   changePage = name => {
@@ -20,6 +17,7 @@ export default class SwipeParent extends React.Component {
     this.swiperRef.scrollBy(index);
     //-1 * (0 - index)
   };
+
   render() {
     return (
       <Swiper
@@ -27,6 +25,7 @@ export default class SwipeParent extends React.Component {
         showsPagination={false}
         index={0}
         showsButtons={false}
+        onIndexChanged={this.updateState}
       >
         <HomeScreen changePage={this.changePage} />
         <DetailsScreen />
